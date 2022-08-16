@@ -1,0 +1,31 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{% block title%}
+Auth
+{% endblock title%}
+
+{% block body %}
+
+{%if test%}
+<div class="auth" style='background-image: url("../static/mysite/images/doodle6.jpg");'>
+    <div class="card">
+        <div class="card-body">
+            <label class="label"><b>Enter your OTP </b></label>
+            <form action="auth" method="POST"> 
+                <div class="input-group mb-4" >
+                <input type="text" name="otp1" class="form-control" maxlength="1" style="margin:2px; text-align: center" />
+                <input type="text" name="otp2" class="form-control" maxlength="1" style="margin:2px; text-align: center" />
+                <input type="text" name="otp3" class="form-control" maxlength="1" style="margin:2px; text-align: center" />
+                <input type="text" name="otp4" class="form-control" maxlength="1" style="margin:2px; text-align: center" />
+                <input type="text" name="otp5" class="form-control" maxlength="1" style="margin:2px; text-align: center" />
+                <input type="text" name="otp6" class="form-control" maxlength="1" style="margin:2px; text-align: center" />
+                </div> {% csrf_token %}
+                <input type="submit" class="btn btn-primary">
+            </form>
+        </div>
+    </div>
+</div>
+
+{%endif%}
+{% endblock body%}

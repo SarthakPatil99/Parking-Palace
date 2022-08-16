@@ -1,0 +1,137 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{% block title%}
+Bookings
+{% endblock title%}
+
+<!-- {% block booking%}
+{% for Who in Whos %}
+  {% if Who.user_Pname %}
+    <li class="nav-item">
+      <a class="nav-link active" aria-current="page" href="/client">Bookings</a>
+    </li>
+  {% endif %}
+{% endfor %}
+{% endblock booking%} -->
+
+{% block body %}
+<div class="container-fluid p-3" > 
+  <div class="Owner_head">
+    <div class="card">
+      <div class="row" style="padding: 0.3%;">
+        <div class="d-flex justify-content-between">
+          <h4 style="color: gray;"><b>BOOKINGS</b></h4>
+          <div class="btn-group dropstart float-end mr-5" >
+            <button type="button" class="btn dropdown-toggle" 
+              style="background-color:rgb(143, 220, 241); color:black; border: none;"
+              data-bs-toggle="dropdown" aria-expanded="false">
+                Sort Bookings
+            </button>
+            <form action="client" method="post">{% csrf_token %}
+              <ul class="dropdown-menu" style="text-align: center; background-color:rgb(143, 220, 241);">
+                <button class="btn" style="width: 100%;" name="sort" type="submit" value="All">  All  </button>
+                <hr>
+                <button class="btn" style="width: 100%;" name="sort" type="submit" value="Verified">  Verified  </button>
+                <hr>
+                <button class="btn" style="width: 100%;" name="sort" type="submit" value="N_Verified">  Non-Verified   </button>
+              </ul>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>        
+  {%if Bks%}
+  <table class="table table-hover">
+    <thead>
+      <tr>
+        <th>User Name</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email Address</th>  
+        <th>Contact No.</th>
+        <th>Vehicle No.</th>
+        <th>Vehicle Type</th>  
+        <th>Time Slot</th>
+        <th>Duration</th>
+        <th>Price</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for Bk in Bks %}
+        <tr>
+          <td data-label="User Name">{{Bk.U_Username}}</td>
+          <td data-label="First Name">{{Bk.U_FirstName}}</td>  
+          <td data-label="Last Name">{{Bk.U_LastName}}</td> 
+          <td data-label="Email Address">{{Bk.U_Email}}</td>    
+          <td data-label="Contact No.">{{Bk.U_MobNo}}</td> 
+          <td data-label="Vehicle No.">{{Bk.U_VehicleNo}}</td>  
+          <td data-label="Vehicle Type">{{Bk.U_VType}}</td>  
+          <td data-label="Time Slot">{{Bk.U_TimeSlot}}</td>  
+          <td data-label="Duration">{{Bk.U_Duration}}</td>
+          <td data-label="Price">
+            {% if Bk.U_status %}
+              {{Bk.price}}
+            {% else %}
+              <a style="color:red">{{Bk.price}}</a>
+            {% endif %}
+          </td>
+          <td data-label="Status">
+            {% if Bk.U_status %}
+              <span class="badge bg-success" style="color: black; font-size: 85%;">Verified</span>
+            {% else %}
+              <span class="badge bg-info" style="color: black; font-size: 85%;">Not Verified</span>
+            {% endif %}
+
+            {% if Bk.extended %}
+              <span class="badge bg-warning" style="color: black; font-size: 85%;">Time Extended</span>
+            {% endif %}
+          </td>
+          <td data-label="Duration">
+            <form action="client" method="POST">{% csrf_token %}
+              {% if not Bk.U_status or Bk.extended %}
+                <a class="btn" name="Verify" style="background-color:rgb(88, 189, 218); color:rgb(0, 0, 0);" 
+                  data-bs-toggle="modal" href="#static{{Bk.id}}">
+                  <i class="fas fa-check"></i>
+                </a>
+              {% endif %}
+              <Button type="submit" class="btn" name="Extend" style="background-color:rgb(236, 200, 0); color:rgb(0, 0, 0);" value="{{Bk.U_token}}">
+                <i class="far fa-clock"></i>
+              </Button>
+              <Button type="submit" class="btn" name="Remove" style="background-color:tomato; color:rgb(0, 0, 0);" value="{{Bk.U_token}}">
+                <i class="fa-regular fa-trash-can"></i>
+              </Button>
+            </form>
+            <div class="modal fade" id="static{{Bk.id}}" data-bs-backdrop="static" data-bs-keyboard="false" >
+              <div class="modal-dialog">
+                <div class="modal-content" style="border: none; background-color: rgb(198, 198, 198);">
+                  <div class="modal-header" style="background-color: #e8bb37;">
+                    <h4 class="modal-title" id="staticBackdropLabel">Authenticate Booking</h4>
+                    <button type="button" class=" btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                  </div>
+                    <form action="client" method="POST">
+                      <div class="modal-body">
+                        <div class="mb-3 mt-3">
+                            <label for="token" class="form-label">Token : </label>
+                            <input type="text" class="form-control" id="token" name="token" required>
+                        </div>
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-primary" value="">Verify</button>   
+                      </div>
+                    </form>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table> 
+  {%else%}
+    <h4 style="text-align: center;  color:rgb(162, 52, 52)">No Bookings Found</h4>
+  {% endif %}
+</div>
+{% endblock body%}

@@ -1,0 +1,66 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{% block title%}
+Home
+{% endblock title%}
+
+{% block body %}
+<!-- Carousel -->
+<div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+  <!-- Indicators/dots -->
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+  </div>
+
+  <!-- The slideshow/carousel -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="{% static 'mysite/images/m5.jpg' %}" alt="Los Angeles" class="d-block w-100">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'mysite/images/parking1.jpg' %}" alt="Chicago" class="d-block w-100">
+    </div>
+    <div class="carousel-item">
+      <img src="{% static 'mysite/images/parking2.jpg' %}" alt="New York" class="d-block w-100">
+    </div>
+  </div>
+
+  <!-- Left and right controls/icons -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+<!-- search button -->
+<form class="d-flex search" style='background-image: url("../static/mysite/images/doodle6.jpg");' 
+role="search" method="post" action="{% url 'card_list' %}">
+    <!-- <input class="form-control me-2 px-4 h-50 search_bar" type="search" placeholder="Search" aria-label="Search">
+    <button class="btn btn-outline-success h-50" type="submit">Search</button>
+     -->
+    <div class="search_wrap search_wrap_6">
+      <div class="search_box">
+        <input type="search" class="input" aria-label="Search" placeholder="Search location..." 
+        name="Searchloc">
+        {% csrf_token %}
+        <button class="btn" type="submit">
+          Search
+        </button>
+      </div>
+    </div>
+</form>
+<!-- <div class="search_wrap search_wrap_6">
+  <div class="search_box">
+    <input type="text" class="input" placeholder="search...">
+    <div class="btn">
+      <p>Search</p>
+    </div>
+  </div>
+</div> -->
+{% endblock body%}

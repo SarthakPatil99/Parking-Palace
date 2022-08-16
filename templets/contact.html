@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+
+    integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+
+    <script src="https://kit.fontawesome.com/15a00c5ce9.js" crossorigin="anonymous"></script>
+
+    <style>
+
+        body{
+
+            background-color: rgb(255, 178, 34);
+
+            height: auto;
+
+            width: auto;
+
+        }
+
+        .aboutus{
+
+            height: 100%;
+
+            width: 100%;
+
+        }
+
+ 
+
+        .aboutus h1{
+
+            text-align: center;
+
+        }
+
+ 
+
+        .aboutus h5{
+
+            text-align: center;
+
+        }
+
+ 
+
+        .aboutus h6{
+
+            text-align: center;
+
+            color: black;
+
+        }
+
+ 
+
+        .aboutus .card{
+
+            width: 100%;
+
+            background-color: rgb(255, 178, 34);;
+
+            border-radius: 20px;
+
+            border-color: rgb(255, 183, 0);
+
+            padding: 5%;
+
+        }
+
+ 
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="aboutus">
+
+        <div class="card">
+
+            <h1><B>PARKING TICKET</B></h1>
+
+            <h5>
+
+                <h6>PARKING NAME : '''+context['O_Username']+'''</h6>
+
+                <h6>PARKING TIME : '''+context['U_time']+'''</h6>
+
+                <h6>PARKING DURATION : '''+context['U_duration']+'''</h6>
+
+                <h6>PARKING TOKEN : '''+context['U_token']+'''</h6>
+
+            </h5>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>
+'''

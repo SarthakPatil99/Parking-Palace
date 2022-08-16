@@ -1,0 +1,97 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{% block title%}
+Client
+{% endblock title%}
+
+{% block body %}
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" >
+  <div class="modal-dialog">
+    <div class="modal-content" style="border: none; background-color: rgb(198, 198, 198);">
+      <div class="modal-header" style="background-color: #e8bb37;">
+        <h4 class="modal-title" id="staticBackdropLabel">Authenticate Booking</h4>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+          <form action="client" method="POST">
+              <div class="mb-3 mt-3">
+                  <label for="reg" class="form-label"><h4>Token : </h4></label>
+                  <input type="text" class="form-control" id="reg" required>
+              </div>
+              {% csrf_token %}
+              <button type="submit" value="send_otp" class="btn btn-primary" >Verify</button>   
+          </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- modal -->
+<div class="container-fluid p-5 my-5" > 
+  <div class="btn-group dropstart float-end mr-5" >
+    <button type="button" class="btn dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+      Sort 
+      <ul class="dropdown-menu" style="text-align: center;">
+        <a class="btn" name="sort" type="submit" value="All">  All  </a>
+        <a class="btn" name="sort" type="submit" value="Verified Bookings">  Verified Bookings  </a>
+        <a class="btn" name="sort" type="submit" value="N_Verified Bookings">  Non-Verified bookings   </a>
+      </ul>
+    </button>
+  </div>
+  <h2>Details of clients</h2>         
+  <table class="table-dark table table-hover" 
+    style="border-color:#055; border-style:dashed; border-width:1px; border-radius: 30px; ">
+    <caption>List of Parking users</caption>
+    <thead>
+      <tr>
+        <th>UserName</th>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>  
+        <th>Contact No.</th>
+        <th>Vehicle No.</th>  
+        <th>Time Slot</th>
+        <th>Duration</th>
+        <th>Status</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody class="table-light">
+     <tr>
+       <td data-label="UserName">jhccjhfchsd</td>
+       <td data-label="First Name">jdasjhdash</td>  
+       <td data-label="Last Name">sdasdasdasd</td> 
+       <td data-label="Email">hufgusgfhgdhve</td>   
+       <td data-label="Contact No.">jdasjhdash</td> 
+       <td data-label="Vehicle No.">jhccjhfchsd</td>  
+       <td data-label="Time Slot">jdasjhdash</td>  
+       <td data-label="Duration">jdasjhdash</td>
+       <td data-label="Status">is verified</td>
+       <td> 
+        <input type="submit" value="Extend" class="btn" name="Extend" style="background-color:blueviolet; color:white;"/>
+        <input type="submit" value="Remove" class="btn" name="Remove" style="background-color:rgb(255, 48, 84); color:white;"/>
+       </td>
+     </tr>
+     <tr>
+      <td data-label="UserName">jhccjhfchsd</td>
+       <td data-label="First Name">jdasjhdash</td>  
+       <td data-label="Last Name">sdasdasdasd</td> 
+       <td data-label="Email">hufgusgfhgdhve</td>   
+       <td data-label="Contact No.">jdasjhdash</td> 
+       <td data-label="Vehicle No.">jhccjhfchsd</td>  
+       <td data-label="Time Slot">jdasjhdash</td>  
+       <td data-label="Duration">jdasjhdash</td>
+       <td data-label="Status">
+        <button class="btn btn-lg btn-primary" name="Verify" style="background-color:rgb(63, 171, 200); color:black;" 
+        data-bs-toggle="modal" href="#staticBackdrop">Verify</button>
+       </td>
+      <td> 
+       <input type="submit" value="Extend" class="btn" name="Extend" style="background-color:blueviolet; color:white;"/>
+       <input type="submit" value="Remove" class="btn" name="Remove" style="background-color:rgb(255, 48, 84); color:white;"/>
+      </td>
+    </tr>
+    </tbody>
+  </table> 
+</div> 
+
+{% endblock body%} -->

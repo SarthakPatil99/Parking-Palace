@@ -1,0 +1,166 @@
+{%extends 'base.html'%}
+{% load static %}
+
+{% block title%}
+Parkings
+{% endblock title%}
+
+{% block body %}
+{% if search %}
+    <div class="bg-dark" style="width: 100%;">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-7 mt-1">
+                <h5 class="text-white">Search result for {{search}}...</h5>
+            </div>
+            <div class="col-12 col-md-6 col-lg-5 mt-1 mb-2">
+                <form class="d-flex" role="search" method="post" action="{% url 'card_list' %}">
+                    <input class="form-control me-2" type="search" placeholder="Search location" aria-label="Search" name="Searchloc">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-success me-2" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div class="container mt-3 mb-3">
+        <div class="row g-3">
+            {% for PO in POs %}
+                {% if PO.user_Pname %}
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <div class="card">
+                            <img src="{{PO.user_Pimage.url}}" alt="A Streeet in Europe" class="card-img-top">
+                            <div class="card-header">
+                                <h5 class="card-title">{{PO.user_Pname}}</h5>
+                                <p class="card-text">{{PO.user_PAname}}</p>
+                                <div class="row">
+                                    <div class="d-flex justify-content-between">
+                                        {%if user.is_authenticated %}
+                                        <a class=" btn " data-bs-toggle="collapse" href="#collapse{{PO.username}}">
+                                            BOOK NOW
+                                        </a>
+                                        {%else%}
+                                        <a class=" btn " data-bs-toggle="modal" href="#myModal">
+                                            LOGIN
+                                        </a>
+                                        {% endif %}
+                                        <a class=" btn " href="https://www.google.com/maps/search/?api=1&query={{PO.user_Paddr}}">
+                                            <i class="fa-solid fa-location-dot"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="collapse{{PO.username}}" class="collapse" data-bs-parent="#accordion">
+                                <div class="card-body" style="align-items: center;">
+                                    <p><b>Contact:</b> {{PO.user_phone}}</p>
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-4"> 
+                                                <a href="card_list?type=bike" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{PO.username}}">FOR BIKE</a>
+                                            </div>
+                                            <div class="col-4"> 
+                                                <a href="card_list?type=car" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop{{PO.username}}1">FOR CAR</a>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="modal fade" id="staticBackdrop{{PO.username}}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <!-- <form action="card_list" method="POST" name="Booking"> -->
+                                <div class="modal-content" style="border: none; background-color: rgb(198, 198, 198);">
+                                    <div class="modal-header" style="background-color: #e8bb37;">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Book Parking in {{PO.user_Pname}}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="card_list" method="POST" name="Booking">
+                                            <div class="mb-3 mt-3">
+                                                <label for="reg" class="form-label"><b>Vehicle Registration Number : </b></label>
+                                                <input type="text" class="form-control" id="reg" placeholder="E.g  MH 12  YZ 6969" name="reg" required>
+                                            </div>
+                                            <label for="time" class="form-label"><b>Time : </b></label><br>
+                                            <div class="input-group mb-3">
+                                                <button class="btn" style="border:none;" disabled><b> Start Time :- </b></button>
+                                                <input type="time" class="form-control" id="time" name="time" min="{{hr}}:{{mn}}" required>
+                                                <input type="hidden" name="O_name" value="{{PO.user_Pname}}">
+                                                <input type="hidden" name="Vehicle" value="Bike">
+                                                <select name="duration" required>
+                                                <option >Duration</option> 
+                                                <option value="30 min">30 Min</option>
+                                                <option value="1 Hr">1 Hr</option>
+                                                <option value="2 Hr">2 Hr</option>
+                                                <option value="3 Hr">3 Hr</option>
+                                                <option value="4 Hr">4 Hr</option>
+                                                <option value="5 Hr">5 Hr</option>
+                                                </select>
+                                            </div>
+                                            {% csrf_token %}
+                                            <button type="submit" name="otp" value="send_otp" class="btn btn-primary" >BOOK NOW</button>   
+                                        </form>
+                                    </div>
+                                </div>
+                            <!-- </form> -->
+                        </div>
+                    </div>
+                    <div class="modal fade" id="staticBackdrop{{PO.username}}1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <!-- <form action="card_list" method="POST" name="Booking"> -->
+                                <div class="modal-content" style="border: none; background-color: rgb(198, 198, 198);">
+                                    <div class="modal-header" style="background-color: #e8bb37;">
+                                        <h5 class="modal-title" id="staticBackdropLabel">Book Parking in {{PO.user_Pname}}</h5>
+                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <form action="card_list" method="POST" name="Booking">
+                                            <div class="mb-3 mt-3">
+                                                <label for="reg" class="form-label"><b>Vehicle Registration Number : </b></label>
+                                                <input type="text" class="form-control" id="reg" placeholder="E.g  MH 12  YZ 6969" name="reg" required>
+                                            </div>
+                                            <label for="time" class="form-label"><b>Time : </b></label><br>
+                                            <div class="input-group mb-3">
+                                                <button class="btn" style="border:none;" disabled><b> Start Time :- </b></button>
+                                                <input type="time" class="form-control" id="time" name="time" min="{{hr}}:{{mn}}" required>
+                                                <input type="hidden" name="O_name" value="{{PO.user_Pname}}">
+                                                <input type="hidden" name="Vehicle" value="Car">   
+                                                <select name="duration" required>
+                                                <option >Duration</option> 
+                                                <option value="30 min">30 Min</option>
+                                                <option value="1 Hr">1 Hr</option>
+                                                <option value="2 Hr">2 Hr</option>
+                                                <option value="3 Hr">3 Hr</option>
+                                                <option value="4 Hr">4 Hr</option>
+                                                <option value="5 Hr">5 Hr</option>
+                                                </select>
+                                            </div>
+                                            {% csrf_token %}
+                                            <button type="submit" name="otp" value="send_otp" class="btn btn-primary" >BOOK NOW</button>   
+                                        </form>
+                                    </div>
+                                </div>
+                            <!-- </form> -->
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+{% else %}
+    <div class="bg-dark" style="width: 100%;">
+        <div class="row">
+            <div class="col-12 col-md-6 col-lg-7 mt-1">
+                <h5 class="text-white">Search result for None...</h5>
+            </div>
+            <div class="col-12 col-md-6 col-lg-5 mt-1 mb-2">
+                <form class="d-flex" role="search" method="post" action="{% url 'card_list' %}">
+                    <input class="form-control me-2" type="search" placeholder="Search location" aria-label="Search" name="Searchloc">
+                    {% csrf_token %}
+                    <button class="btn btn-outline-success me-2" type="submit">Search</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endif %}
+{% endblock body%}
